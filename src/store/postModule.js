@@ -107,6 +107,23 @@ const postModule = {
         alert(error.response?.data?.message);
       }
     },
+    async getComments({ state }, postId) {
+      // API calling
+      try {
+        const response = await defaultAxios.get(`comments/post/${postId}`);
+        const comments = response.data?.comments?.map((comment)=> {
+          return {
+            id: comment.id,
+            content: comment.body,
+            date: '2024-05-24 11:00:00'
+          }
+        })
+        return comments
+      } catch (error) {
+        console.log('error',error);
+        alert(error.response?.data?.message);
+      }
+    },
   }
 }
 

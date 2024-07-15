@@ -10,7 +10,7 @@ const defaultAxios = axios.create({
 
 defaultAxios.interceptors.request.use(
     function (config) {
-        console.log('Request Config',config);
+        // console.log('Request Config',config);
         return config;
     },
     function (error) {
@@ -19,7 +19,7 @@ defaultAxios.interceptors.request.use(
 )
 defaultAxios.interceptors.response.use(
     function (response) {
-        console.log('response = ',response);
+        // console.log('response = ',response);
         return response;
     },
     function (error) {

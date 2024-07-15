@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, computed, watch, defineModel } from 'vue'
+import { ref, defineProps, computed, watch, defineModel, onMounted } from 'vue'
 import moment from 'moment'
 import { useStore } from 'vuex'
 
@@ -44,6 +44,13 @@ async function addComment() {
 function deleteComment(postId, commentId) {
   store.commit('posts/deleteComment', { postId, commentId });
 }
+
+onMounted(() => {
+  store.dispatch('posts/getComments', post.value.id).then((comments)=> {
+    console.log(comments);
+    post.value.comments = comments;
+  })
+})
 </script>
 
 <template>
