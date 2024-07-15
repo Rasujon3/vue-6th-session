@@ -68,6 +68,27 @@ const postModule = {
     },
     async getPosts({commit}) {
       commit('setPosts', []);
+
+      // API calling
+      try {
+        const response = await axios.get('https://dummyjson.com/posts');
+        const posts = response.data?.posts?.map((post)=> {
+          return {
+            id: post.id,
+            title: post.title,
+            content: post.body,
+            likes: post.reactions?.id,
+            comments: [],
+            date: '2024-05-24 11:00:00',
+            commentFormData: '',
+            showCommentSection: false
+          }
+        })
+        commit('setPosts', posts);
+      } catch (error) {
+        console.log('error',error);
+        alert(error.response?.data?.message);
+      }
     }
   }
 }
