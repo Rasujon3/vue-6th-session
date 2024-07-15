@@ -26,7 +26,10 @@ const router = createRouter({
         {
           path: 'create-post',
           name: 'CreatePost',
-          component: () => import('@/components/CreatePost.vue')
+          component: () => import('@/components/CreatePost.vue'),
+          meta: {
+            requiresAuth: true,
+          }
         },
         {
           path: ':id',
@@ -51,7 +54,7 @@ router.beforeEach((to, from, next) => {
   ) {
     next({ name: 'PostList' })
   } else if (
-    to.name !== 'Login' &&
+    to.meta?.requiresAuth &&
     (!localStorage.getItem('authToken') || !localStorage.getItem('authUserInfo'))
   ) {
     next({ name: 'Login' })
