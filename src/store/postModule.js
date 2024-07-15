@@ -89,7 +89,23 @@ const postModule = {
         console.log('error',error);
         alert(error.response?.data?.message);
       }
-    }
+    },
+    async createPost({commit,state,rootState}) {
+      // API calling
+      try {
+        const response = await axios.post('https://dummyjson.com/posts/add', {
+          title: state.postTitle,
+          body: state.postContent,
+          userId: rootState.authUserInfo?.id,
+        });
+        
+        commit('createPost');
+        return response
+      } catch (error) {
+        console.log('error',error);
+        alert(error.response?.data?.message);
+      }
+    },
   }
 }
 

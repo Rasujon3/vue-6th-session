@@ -1,13 +1,17 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 
 const store = useStore()
 const router = useRouter()
+const isLoading = ref(false)
 
-function postCreate() {
-  store.commit('posts/createPost')
+async function postCreate() {
+  isLoading.value = true;
+  // store.commit('posts/createPost')
+  await store.dispatch('posts/createPost')
+  isLoading.value = false;
   // router.push('/posts');
   router.push({ name: 'PostList' });
   // router.go(1);
@@ -61,7 +65,11 @@ const postContent = computed({
                   required
                 ></textarea>
               </div>
-              <button type="submit" class="btn btn-success">Submit</button>
+              <button v-if="isLoading" class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status"> Loading...</span>
+              </button>
+              <button v-else type="submit" class="btn btn-success">Submit</button>
             </form>
           </div>
         </div>
