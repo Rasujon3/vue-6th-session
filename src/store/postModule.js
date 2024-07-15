@@ -1,3 +1,4 @@
+import { defaultAxios } from "@/axios/axiosInstance";
 import axios from "axios";
 import moment from "moment"
 
@@ -71,7 +72,7 @@ const postModule = {
 
       // API calling
       try {
-        const response = await axios.get('https://dummyjson.com/posts');
+        const response = await defaultAxios.get('posts');
         const posts = response.data?.posts?.map((post)=> {
           return {
             id: post.id,
@@ -93,7 +94,7 @@ const postModule = {
     async createPost({commit,state,rootState}) {
       // API calling
       try {
-        const response = await axios.post('https://dummyjson.com/posts/add', {
+        const response = await defaultAxios.post('posts/add', {
           title: state.postTitle,
           body: state.postContent,
           userId: rootState.authUserInfo?.id,
